@@ -2,7 +2,7 @@ import { SearchOrderForm } from "./searchOrderForm";
 import { OrderTable } from "./orderTable";
 import { toOrderDTO } from "@/lib/dto/order";
 import { AlertCard } from "@/components/alert";
-// pastikan import sesuai
+import prisma from "@/lib/prisma";
 
 export default async function DashboardOrderPage({ searchParams }) {
   const {
