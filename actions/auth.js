@@ -8,8 +8,6 @@ import { createSession, deleteSession } from "@/lib/session";
 import { UserRole } from "@prisma/client";
 
 export async function auth(prevState, formData) {
-  console.log(prevState.message);
-
   const rawData = {
     identifier: formData.get("identifier"),
     password: formData.get("password"),
