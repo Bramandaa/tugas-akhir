@@ -10,14 +10,10 @@ import { redirect } from "next/navigation";
 export async function checkoutCart({ userId, cartItemIds }) {
   const session = await verifySession();
 
-  if (!session) {
-    throw new Error("Harus Login");
-  }
   if (!cartItemIds || cartItemIds.length === 0) {
     throw new Error("Tidak ada item yang dipilih untuk checkout");
   }
 
-  // Ambil item yang dipilih
   const cart = await prisma.cart.findUnique({
     where: { userId },
     select: { id: true },
@@ -28,7 +24,7 @@ export async function checkoutCart({ userId, cartItemIds }) {
   const selectedItems = await prisma.cartItem.findMany({
     where: {
       id: { in: cartItemIds },
-      cartId: cart.id, // ✅ pakai cartId
+      cartId: cart.id,
     },
     include: { product: true },
   });
@@ -43,21 +39,23 @@ export async function checkoutCart({ userId, cartItemIds }) {
 
   const today = format(new Date(), "yyyyMMdd"); // 20251002 misalnya
 
-  // Hitung order terakhir hari ini
-  const countToday = await prisma.order.count({
-    where: {
-      createdAt: {
-        gte: new Date(new Date().setHours(0, 0, 0, 0)), // start of today
-        lt: new Date(new Date().setHours(23, 59, 59, 999)), // end of today
+  let invoiceNumber;
+  while (true) {
+    const countToday = await prisma.order.count({
+      where: {
+        createdAt: {
+          gte: new Date(new Date().setHours(0, 0, 0, 0)),
+          lt: new Date(new Date().setHours(23, 59, 59, 999)),
+        },
       },
-    },
-  });
+    });
+    invoiceNumber = `INV-${today}-${(countToday + 1)
+      .toString()
+      .padStart(3, "0")}`;
 
-  // running number: +1 dari order hari ini
-  const running = (countToday + 1).toString().padStart(3, "0");
-
-  // invoice number
-  const invoiceNumber = `INV-${today}-${running}`;
+    const exists = await prisma.order.findUnique({ where: { invoiceNumber } });
+    if (!exists) break; // unik, keluar loop
+  }
 
   // Jalankan transaksi atomik
   const [order] = await prisma.$transaction([
