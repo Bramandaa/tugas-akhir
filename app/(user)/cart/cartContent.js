@@ -73,7 +73,7 @@ export function CartContent({ cartData, session }) {
     setLoadingId(null);
   }
 
-  if (cartData.length === 0) {
+  if (cartData?.length === 0) {
     return (
       <EmptyPage
         message={"Yuk, mulai belanja dan tambahkan produk ke keranjangmu!"}
@@ -98,7 +98,8 @@ export function CartContent({ cartData, session }) {
             <div className="flex items-center space-x-2">
               <Checkbox
                 checked={
-                  selectedIds.length === cartData.length && cartData.length > 0
+                  selectedIds?.length === cartData?.length &&
+                  cartData?.length > 0
                 }
                 onCheckedChange={handleToggleAll}
                 className="w-5 h-5 md:w-6 md:h-6"
@@ -109,12 +110,12 @@ export function CartContent({ cartData, session }) {
               variant="ghost"
               size="sm"
               className={`${
-                selectedIds.length === 0
+                selectedIds?.length === 0
                   ? "text-gray-400 cursor-not-allowed"
                   : "text-red-500 hover:text-red-600"
               }`}
               onClick={async () => {
-                if (selectedIds.length === 0) return;
+                if (selectedIds?.length === 0) return;
 
                 if (isDbSource) {
                   for (const id of selectedIds) {
@@ -133,7 +134,7 @@ export function CartContent({ cartData, session }) {
 
                 setSelectedIds([]); // reset setelah hapus
               }}
-              disabled={selectedIds.length === 0}
+              disabled={selectedIds?.length === 0}
             >
               Hapus
             </Button>
@@ -144,7 +145,7 @@ export function CartContent({ cartData, session }) {
           <Card
             key={item.cartItemId}
             className={`rounded-lg shadow-sm ${
-              idx === arr.length - 1 ? "mb-60 md:mb-0" : ""
+              idx === arr?.length - 1 ? "mb-60 md:mb-0" : ""
             }`}
           >
             <CardContent className="flex items-center gap-3 p-4">
@@ -221,7 +222,7 @@ export function CartContent({ cartData, session }) {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex justify-between text-sm">
-              <span>Total Harga ({selectedIds.length} barang)</span>
+              <span>Total Harga ({selectedIds?.length} barang)</span>
               <span>Rp {total.toLocaleString("id-ID")}</span>
             </div>
             <Separator />
@@ -234,7 +235,7 @@ export function CartContent({ cartData, session }) {
             <Button
               className="w-full bg-primary text-white rounded-lg cursor-pointer"
               // onClick={handleCheckout}
-              disabled={selectedIds.length === 0 || loadingCheckout}
+              disabled={selectedIds?.length === 0 || loadingCheckout}
             >
               {loadingCheckout ? "Memproses..." : "Beli"}
             </Button>
