@@ -5,7 +5,7 @@ import { AddressContent } from "./addressContent";
 
 export default async function ProfilePage() {
   const session = await getSession();
-  const userData = await getUserById(session.userId);
+  const userData = await getUserById(session.userId, { tags: ["profile"] });
 
   return (
     <section className="max-w-3xl mx-auto px-4 sm:px-6 md:px-10 py-6 space-y-4">

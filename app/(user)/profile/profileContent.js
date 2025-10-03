@@ -11,10 +11,11 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Edit3, Phone } from "lucide-react";
+import { Edit3, Loader2, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { editUserProfile } from "@/actions/profile";
 import { InputField } from "@/components/inputField";
+import Spinner from "@/components/spinner";
 
 export function ProfileContent({ userData }) {
   const initialState = {
@@ -98,9 +99,9 @@ export function ProfileContent({ userData }) {
                     <Button
                       disabled={isPending}
                       type="submit"
-                      className="bg-primary text-white"
+                      className="bg-primary text-white w-20"
                     >
-                      Simpan
+                      {isPending ? <Spinner /> : "Simpan"}
                     </Button>
                   </DialogFooter>
                 </form>

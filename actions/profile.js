@@ -6,7 +6,7 @@ import {
   editUserAddressSchema,
   editUserProfileSchema,
 } from "@/lib/validations/userSchema";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function editUserProfile(prevState, formData) {
@@ -69,7 +69,7 @@ export async function editUserProfile(prevState, formData) {
     console.error("Profile gagal diperbarui :", error);
     return { success: false, message: "Terjadi kesalahan, coba lagi" };
   }
-  revalidatePath("/profile");
+  revalidateTag("profile");
   redirect("/profile");
 }
 
@@ -120,7 +120,7 @@ export async function editUserAdress(prevState, formData) {
     console.error("Alamat gagal diperbarui :", error);
     return { success: false, message: "Terjadi kesalahan, coba lagi" };
   }
-  revalidatePath("/profile");
+  revalidateTag("profile");
   redirect("/profile");
 }
 

@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/select";
 import { editUserAdress } from "@/actions/profile";
 import { InputField } from "@/components/inputField";
+import Spinner from "@/components/spinner";
 
 export function AddressContent({ userData }) {
   const initialState = { success: false, message: "" };
@@ -162,9 +163,9 @@ export function AddressContent({ userData }) {
                 <Button
                   type="submit"
                   disabled={isPending}
-                  className="bg-primary text-white cursor-pointer"
+                  className="bg-primary text-white cursor-pointer w-20"
                 >
-                  Simpan
+                  {isPending ? <Spinner /> : "Simpan"}
                 </Button>
               </DialogFooter>
             </form>
