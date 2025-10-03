@@ -20,19 +20,27 @@ import {
   X,
 } from "lucide-react";
 import { logout } from "@/actions/auth";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "./ui/alert-dialog";
 
 export default function Navigation({ session, cartData }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
 
   return (
     <nav className="top-0 sticky bg-white shadow-sm z-50">
       <div className="flex items-center justify-between w-full max-w-5xl h-14 px-4 md:px-6 m-auto">
-        {/* Brand */}
         <Link href="/" className="font-bold text-xl text-primary">
           Hodury
         </Link>
-
-        {/* Search (hanya muncul di md ke atas) */}
         <div className="hidden md:flex items-center rounded-md border border-gray-300 px-2 h-8 space-x-2">
           <Search className="w-4 text-gray-400" />
           <Input
@@ -101,17 +109,18 @@ export default function Navigation({ session, cartData }) {
                   </Link>
                 </DropdownMenuItem>
 
-                <form action={logout}>
-                  <button className="w-full">
-                    <DropdownMenuItem className="text-red-500/60 focus:text-red-500 hover:text-red-500 focus:bg-red-50 hover:bg-red-50 cursor-pointer flex items-center gap-2 group">
-                      <LogOut
-                        className="h-4 w-4 group-focus:text-red-500"
-                        strokeWidth={1.5}
-                      />
-                      <span>Logout</span>
-                    </DropdownMenuItem>
-                  </button>
-                </form>
+                <button className="w-full">
+                  <DropdownMenuItem
+                    onClick={() => setOpenDialog(true)}
+                    className="text-red-500/60 focus:text-red-500 hover:text-red-500 focus:bg-red-50 hover:bg-red-50 cursor-pointer flex items-center gap-2 group"
+                  >
+                    <LogOut
+                      className="h-4 w-4 group-focus:text-red-500"
+                      strokeWidth={1.5}
+                    />
+                    <span>Logout</span>
+                  </DropdownMenuItem>
+                </button>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
@@ -122,6 +131,33 @@ export default function Navigation({ session, cartData }) {
             </Link>
           )}
         </div>
+
+        <AlertDialog open={openDialog} onOpenChange={setOpenDialog}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Yakin ingin logout?</AlertDialogTitle>
+              <AlertDialogDescription>
+                Kamu akan keluar dari akun ini dan perlu login kembali untuk
+                mengakses fitur dan data pribadi. Pastikan semua aktivitasmu
+                sudah selesai sebelum melanjutkan.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel onClick={() => setOpenDialog(false)}>
+                Batal
+              </AlertDialogCancel>
+              <form className="w-full md:w-fit" action={logout}>
+                <AlertDialogAction
+                  className="w-full md:w-fit bg-red-600 hover:bg-red-500"
+                  type="submit"
+                >
+                  <LogOut strokeWidth={3} />
+                  Logout
+                </AlertDialogAction>
+              </form>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
 
         {/* Mobile Menu Button */}
         <button
@@ -170,14 +206,12 @@ export default function Navigation({ session, cartData }) {
                   <ReceiptText className="h-5" /> Pesanan
                 </Link>
 
-                <form action={logout}>
-                  <button
-                    type="submit"
-                    className="flex items-center gap-2 px-4 py-3 text-red-500 hover:text-red-600 hover:bg-red-50 active:bg-red-100 border-b border-gray-200 w-full text-left"
-                  >
-                    <LogOut className="h-5" /> Logout
-                  </button>
-                </form>
+                <button
+                  onClick={() => setOpenDialog(true)}
+                  className="flex items-center gap-2 px-4 py-3 text-red-500 hover:text-red-600 hover:bg-red-50 active:bg-red-100 border-b border-gray-200 w-full text-left"
+                >
+                  <LogOut className="h-5" /> Logout
+                </button>
               </>
             )}
 

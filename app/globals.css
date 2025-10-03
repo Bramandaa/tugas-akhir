@@ -4,10 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary: #313131;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -32,15 +29,77 @@
   --color-secondary-foreground: var(--secondary-foreground);
   --color-secondary: var(--secondary);
   --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5rem;
+  @apply shadow-md;
+}
+
+.swiper-wrapper {
+  width: 100%;
+}
+.swiper-slide {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+}
+
+.dot-carousel {
+  display: flex;
+  justify-content: center;
+  gap: 1px;
+}
+.dot-carousel .swiper-pagination-bullet {
+  width: 10px;
+  height: 6px;
+  display: inline-block;
+  opacity: 0.4;
+  margin-right: 2px;
+  border-radius: 20px;
+  transition: opacity 0.3s, background-color 0.3s, width 0.3s;
+  transition-delay: 0.3s, 0.3s, 0s;
+  cursor: pointer;
+  @apply bg-primary;
+}
+
+.dot-carousel .swiper-pagination-bullet-active {
+  opacity: 1;
+  width: 20px;
+  transition-delay: 0s;
+  @apply bg-primary;
 }
 
 :root {
