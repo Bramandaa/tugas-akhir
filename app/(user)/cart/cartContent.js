@@ -73,7 +73,9 @@ export function CartContent({ cartData, session }) {
     setLoadingId(null);
   }
 
-  if (cartData?.length === 0 || undefined) {
+  console.log(cartData);
+
+  if (cartData?.length === 0 || null) {
     return (
       <EmptyPage
         message={"Yuk, mulai belanja dan tambahkan produk ke keranjangmu!"}
@@ -83,7 +85,7 @@ export function CartContent({ cartData, session }) {
         <div className="p-6 rounded-full shadow-md">
           <ShoppingCart className="w-12 h-12 text-primary" />
         </div>
-        <h2 className="text-xl font-semibold text-primary">Belum ada produk</h2>
+        <h2 className="text-xl font-semibold text-primary">Belum ada item</h2>
       </EmptyPage>
     );
   }
