@@ -65,7 +65,7 @@ export default async function Home(props) {
 
   return (
     <>
-      <Navigation session={session} cartData={cartData?.items} />
+      <Navigation session={session} cartData={cartData} />
       <section className="max-w-5xl mx-auto px-4 sm:px-6 md:px-10 py-6 space-y-12">
         {(!SearchProducts || SearchProducts.length === 0) && (
           <Banner banners={banners} />

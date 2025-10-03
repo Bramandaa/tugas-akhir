@@ -1,7 +1,9 @@
 "use client";
 
 import { removeCartItem, updateCartQuantity } from "@/actions/cart";
+import { checkoutCart } from "@/actions/checkout";
 import EmptyPage from "@/components/EmptyPage";
+import Spinner from "@/components/spinner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -73,6 +75,25 @@ export function CartContent({ cartData, session }) {
     setLoadingId(null);
   }
 
+  async function handleCheckout() {
+    if (selectedIds.length === 0) return;
+    try {
+      setLoadingCheckout(true);
+      const result = await checkoutCart({
+        userId: session.userId,
+        cartItemIds: selectedIds,
+      });
+
+      setSelectedIds([]);
+      router.replace(`/checkout/${result.invoiceNumber}`);
+    } catch (err) {
+      console.error(err);
+      alert("Terjadi kesalahan saat checkout");
+    } finally {
+      setLoadingCheckout(false);
+    }
+  }
+
   if (!cartData || cartData.length === 0) {
     return (
       <EmptyPage
@@ -116,23 +137,17 @@ export function CartContent({ cartData, session }) {
               }`}
               onClick={async () => {
                 if (selectedIds?.length === 0) return;
-
-                if (isDbSource) {
-                  for (const id of selectedIds) {
-                    try {
-                      setLoadingId(id);
-                      await removeCartItem(id); // hapus dari DB
-                    } finally {
-                      setLoadingId(null);
-                    }
+                for (const id of selectedIds) {
+                  try {
+                    setLoadingId(id);
+                    await removeCartItem(id);
+                  } finally {
+                    setLoadingId(null);
                   }
-                  router.refresh(); // refresh data setelah selesai
-                } else {
-                  // localStorage cukup sync
-                  selectedIds.forEach((id) => removeFromCart(id));
                 }
+                router.refresh();
 
-                setSelectedIds([]); // reset setelah hapus
+                setSelectedIds([]);
               }}
               disabled={selectedIds?.length === 0}
             >
@@ -234,10 +249,10 @@ export function CartContent({ cartData, session }) {
             </div>
             <Button
               className="w-full bg-primary text-white rounded-lg cursor-pointer"
-              // onClick={handleCheckout}
+              onClick={handleCheckout}
               disabled={selectedIds?.length === 0 || loadingCheckout}
             >
-              {loadingCheckout ? "Memproses..." : "Beli"}
+              {loadingCheckout ? <Spinner /> : "Beli"}
             </Button>
           </CardContent>
         </Card>

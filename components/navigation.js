@@ -68,10 +68,10 @@ export default function Navigation({ session, cartData }) {
           <Link href={"/cart"}>
             <div className="relative">
               <ShoppingCart className="h-6 text-gray-400 hover:text-primary cursor-pointer" />
-              {cartData?.length > 0 && (
+              {cartData?.items?.length > 0 && (
                 <div className="absolute -top-2 -right-[10px]">
                   <div className="flex items-center justify-center bg-primary text-white aspect-square text-[10px] w-5 rounded-full">
-                    {cartData?.length}
+                    {cartData?.items?.length}
                   </div>
                 </div>
               )}

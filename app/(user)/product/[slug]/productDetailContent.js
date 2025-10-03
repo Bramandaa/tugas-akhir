@@ -18,6 +18,7 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 import { toast } from "sonner";
 import { addToCart } from "@/actions/cart";
+import Spinner from "@/components/spinner";
 
 export default function ProductDetailContent({ product, session }) {
   const [quantity, setQuantity] = useState(1);
@@ -158,7 +159,7 @@ export default function ProductDetailContent({ product, session }) {
                 onClick={!session ? () => redirect("/login") : handleAddToCart}
                 disabled={isPending}
               >
-                + Keranjang
+                {isPending ? <Spinner /> : "+ Keranjang"}
               </Button>
             </CardContent>
           </Card>

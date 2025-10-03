@@ -121,7 +121,11 @@ export async function editUserAdress(prevState, formData) {
     return { success: false, message: "Terjadi kesalahan, coba lagi" };
   }
   revalidateTag("profile");
-  redirect("/profile");
+  return {
+    success: true,
+    message: "Berhasil mengubah alamat",
+    timestamp: Date.now(),
+  };
 }
 
 export async function editAdressCheckout(prevState, formData) {
@@ -171,7 +175,7 @@ export async function editAdressCheckout(prevState, formData) {
     console.error("Alamat gagal diperbarui :", error);
     return { success: false, message: "Terjadi kesalahan, coba lagi" };
   }
-  revalidatePath("/checkout");
+  revalidateTag("profile");
   return {
     success: true,
     message: "Berhasil mengubah alamat",

@@ -5,11 +5,11 @@ import Navigation from "@/components/navigation";
 export default async function UserLayout({ children }) {
   const session = await getSession();
 
-  const cartData = session?.userId ? await getCartByUser(session.userId) : null;
+  const cartData = session?.userId ? await getCartByUser(session.userId) : [];
 
   return (
     <>
-      <Navigation session={session} cartData={cartData?.items} />
+      <Navigation session={session} cartData={cartData} />
       <>{children}</>
     </>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -31,14 +31,16 @@ export function AddressContent({ userData }) {
     initialState
   );
 
+  const [open, setOpen] = useState(false);
+
   const [provinsi, setProvinsi] = useState(
-    state.inputs?.provinsi ?? userData?.provinsi ?? ""
+    state?.inputs?.provinsi ?? userData?.provinsi ?? ""
   );
   const [kabupaten, setKabupaten] = useState(
-    state.inputs?.kabupaten ?? userData?.kabupaten ?? ""
+    state?.inputs?.kabupaten ?? userData?.kabupaten ?? ""
   );
   const [kecamatan, setKecamatan] = useState(
-    state.inputs?.kecamatan ?? userData?.kecamatan ?? ""
+    state?.inputs?.kecamatan ?? userData?.kecamatan ?? ""
   );
 
   const kecamatanOptions = [
@@ -55,6 +57,12 @@ export function AddressContent({ userData }) {
     userData.provinsi &&
     userData.kabupaten &&
     userData.kecamatan;
+
+  useEffect(() => {
+    if (state?.success) {
+      setOpen(!open);
+    }
+  }, [state?.success, state?.timestamp]);
 
   return (
     <Card className="rounded-2xl shadow-md border border-gray-200">
@@ -76,7 +84,7 @@ export function AddressContent({ userData }) {
           </div>
         </div>
 
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
             <Button
               size="sm"
@@ -97,11 +105,11 @@ export function AddressContent({ userData }) {
                 label="Alamat Lengkap"
                 placeholder="Masukkan alamat lengkap"
                 defaultValue={
-                  state.inputs?.fullAddress ?? userData.fullAddress ?? ""
+                  state?.inputs?.fullAddress ?? userData.fullAddress ?? ""
                 }
                 required
                 autoComplete="fullAddress"
-                error={state.errors?.fullAddress}
+                error={state?.errors?.fullAddress}
               />
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
