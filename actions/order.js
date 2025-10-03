@@ -1,3 +1,5 @@
+import prisma from "@/lib/prisma";
+
 export async function updateStatusOrderDashboard(id, status) {
   const session = await verifySession();
 
