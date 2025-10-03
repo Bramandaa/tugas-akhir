@@ -30,10 +30,19 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "./ui/alert-dialog";
+import { useRouter } from "next/navigation";
 
 export default function Navigation({ session, cartData }) {
+  const router = useRouter();
+  const [keyword, setKeyword] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setIsOpen(false);
+    router.push(keyword !== "" ? `?search=${keyword}` : "/");
+  };
 
   return (
     <nav className="top-0 sticky bg-white shadow-sm z-50">
@@ -41,27 +50,31 @@ export default function Navigation({ session, cartData }) {
         <Link href="/" className="font-bold text-xl text-primary">
           Hodury
         </Link>
-        <div className="hidden md:flex items-center rounded-md border border-gray-300 px-2 h-8 space-x-2">
-          <Search className="w-4 text-gray-400" />
-          <Input
-            className="w-80 border-0 focus-visible:ring-0 p-0 text-primary"
-            type="search"
-            placeholder="Cari produk yang kamu inginkan"
-          />
-        </div>
+        <form onSubmit={handleSearch}>
+          <div className="hidden md:flex items-center rounded-md border border-gray-300 px-2 h-8 space-x-2">
+            <Search className="w-4 text-gray-400" />
+            <Input
+              className="w-80 border-0 focus-visible:ring-0 p-0 text-primary"
+              type="search"
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
+              placeholder="Cari produk yang kamu inginkan"
+            />
+          </div>
+        </form>
 
         {/* Menu Desktop */}
         <div className="hidden md:flex items-center space-x-4">
           <Link href={"/cart"}>
             <div className="relative">
               <ShoppingCart className="h-6 text-gray-400 hover:text-primary cursor-pointer" />
-              {/* {(cartData?.length > 0 || cart.length > 0) && (
+              {cartData?.length > 0 && (
                 <div className="absolute -top-2 -right-[10px]">
                   <div className="flex items-center justify-center bg-primary text-white aspect-square text-[10px] w-5 rounded-full">
-                    {cartData?.length ?? cart.length}
+                    {cartData?.length}
                   </div>
                 </div>
-              )} */}
+              )}
             </div>
           </Link>
 
@@ -172,14 +185,18 @@ export default function Navigation({ session, cartData }) {
       {isOpen && (
         <div className="md:hidden bg-white border-t shadow-sm overflow-hidden">
           {/* Search */}
-          <div className="flex items-center border border-gray-300 mx-4 my-3 rounded-md px-2 h-9 space-x-2">
-            <Search className="w-4 text-gray-400" />
-            <Input
-              className="w-full border-0 focus-visible:ring-0 p-0 text-primary text-sm"
-              type="search"
-              placeholder="Cari produk..."
-            />
-          </div>
+          <form onSubmit={handleSearch}>
+            <div className="flex items-center border border-gray-300 mx-4 my-3 rounded-md px-2 h-9 space-x-2">
+              <Search className="w-4 text-gray-400" />
+              <Input
+                className="w-full border-0 focus-visible:ring-0 p-0 text-primary"
+                type="search"
+                value={keyword}
+                onChange={(e) => setKeyword(e.target.value)}
+                placeholder="Cari produk..."
+              />
+            </div>
+          </form>
 
           {/* Menu list */}
           <div className="flex flex-col bg-white">
