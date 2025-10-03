@@ -14,6 +14,7 @@ import { useState } from "react";
 import { payment, updateStatusOrder } from "@/actions/checkout";
 import AddressForm from "./addressForm";
 import Image from "next/image";
+import Spinner from "@/components/spinner";
 
 export default function CheckoutContent({ order, address }) {
   const [loading, setLoading] = useState(false);
@@ -146,7 +147,7 @@ export default function CheckoutContent({ order, address }) {
                   onClick={handlePay}
                   className="w-full bg-primary text-white rounded-lg cursor-pointer"
                 >
-                  Bayar
+                  {loading ? <Spinner /> : "Bayar"}
                 </Button>
               </CardContent>
             </Card>

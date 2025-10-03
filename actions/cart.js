@@ -1,5 +1,6 @@
 "use server";
 
+import prisma from "@/lib/prisma";
 import { verifySession } from "@/lib/session";
 import { revalidateTag } from "next/cache";
 
