@@ -22,6 +22,7 @@ import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { editAdressCheckout } from "@/actions/profile";
 import { InputField } from "@/components/inputField";
+import Spinner from "@/components/spinner";
 
 export default function AddressForm({ order, address }) {
   const initialState = { success: false, message: "" };
@@ -170,9 +171,9 @@ export default function AddressForm({ order, address }) {
                     <Button
                       type="submit"
                       disabled={isPending}
-                      className="bg-primary text-white cursor-pointer"
+                      className="bg-primary text-white cursor-pointer w-20"
                     >
-                      Simpan
+                      {isPending ? <Spinner /> : "Simpan"}
                     </Button>
                   </DialogFooter>
                 </form>

@@ -5,6 +5,7 @@ import prisma from "@/lib/prisma";
 import { loginSchema } from "@/lib/validations/authSchema";
 import { redirect } from "next/navigation";
 import { createSession, deleteSession } from "@/lib/session";
+import { UserRole } from "@prisma/client";
 
 export async function auth(prevState, formData) {
   console.log(prevState.message);
@@ -49,7 +50,15 @@ export async function auth(prevState, formData) {
     };
   }
   await createSession(user.id, user.role);
-  redirect("/");
+  redirect(
+    user.role === UserRole.CUSTOMER
+      ? "/"
+      : user.role === UserRole.ADMIN
+      ? "/dashboard"
+      : user.role === UserRole.COURIER
+      ? "/dashboard/order"
+      : "/"
+  );
 }
 
 export async function logout() {

@@ -43,7 +43,7 @@ export default function LoginForm() {
               label="Email / Nomor HP"
               type="text"
               placeholder="Masukkan email atau No. HP"
-              defaultValue={state.inputs?.identifier ?? "081234567890"}
+              defaultValue={state.inputs?.identifier ?? "085156927910"}
               required
               error={state?.errors?.identifier?.[0]}
             />
