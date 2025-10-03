@@ -73,7 +73,7 @@ export function CartContent({ cartData, session }) {
     setLoadingId(null);
   }
 
-  if (cartData?.length === 0) {
+  if (cartData?.length === 0 || undefined) {
     return (
       <EmptyPage
         message={"Yuk, mulai belanja dan tambahkan produk ke keranjangmu!"}

@@ -41,7 +41,7 @@ export default function Navigation({ session, cartData }) {
   const handleSearch = (e) => {
     e.preventDefault();
     setIsOpen(false);
-    router.push(keyword !== "" ? `?search=${keyword}` : "/");
+    router.push(keyword !== "" ? `/?search=${keyword}` : "/");
   };
 
   return (

@@ -100,7 +100,7 @@ export default async function Home(props) {
                             {item.name}
                           </p>
                           <p className="text-sm font-bold text-primary">
-                            {item.price.toLocaleString("id-ID")}
+                            Rp {item.price.toLocaleString("id-ID")}
                           </p>
                         </div>
                       </CardContent>
