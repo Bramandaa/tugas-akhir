@@ -5,9 +5,7 @@ import { getSession } from "@/lib/session";
 export default async function CartPage() {
   const session = await getSession();
 
-  const cartData = session?.userId
-    ? await getCartByUser(session.userId, { tags: ["cart"] })
-    : null;
+  const cartData = session?.userId ? await getCartByUser(session.userId) : null;
 
   return (
     <>

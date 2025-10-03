@@ -2,7 +2,7 @@
 
 import ImageKit from "imagekit";
 import { redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import prisma from "@/lib/prisma";
 import {
   addProductSchema,
@@ -88,7 +88,7 @@ export async function addProduct(prevState, formData) {
       message: "Terjadi kesalahan, coba lagi",
     };
   }
-  revalidatePath("/dashboard/product");
+  revalidateTag("product");
   redirect("/dashboard/product?success=Produk berhasil ditambahkan");
 }
 

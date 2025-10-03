@@ -16,6 +16,6 @@ export async function updateStatusOrderDashboard(id, status) {
     console.error("Gagal update status pesanan:", error);
     throw new Error("Gagal mengubah status pesanan");
   }
-  revalidatePath("/dashboard/order");
+  revalidatePath("order");
   redirect("/dashboard/order?success=Status Pesanan berhasil diubah");
 }

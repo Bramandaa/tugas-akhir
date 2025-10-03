@@ -33,9 +33,7 @@ export default async function Home(props) {
   }
 
   const [banners, session] = await Promise.all([getBanners(), getSession()]);
-  const cartData = session?.userId
-    ? await getCartByUser(session.userId, { tags: ["cart"] })
-    : [];
+  const cartData = session?.userId ? await getCartByUser(session.userId) : [];
 
   if (
     SearchProducts.length === 0 &&
