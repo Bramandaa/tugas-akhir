@@ -38,7 +38,7 @@ export function CartContent({ cartData, session }) {
 
   function handleToggleAll(checked) {
     if (checked) {
-      setSelectedIds(cartData.map(getCartKey));
+      setSelectedIds(cartData?.map(getCartKey));
     } else {
       setSelectedIds([]);
     }
@@ -49,7 +49,7 @@ export function CartContent({ cartData, session }) {
       setLoadingId(cartItemId);
 
       // cari item di cart
-      const current = cartData.find((i) => i.cartItemId === cartItemId);
+      const current = cartData?.find((i) => i.cartItemId === cartItemId);
       if (!current) return;
 
       const newQty = current.quantity + diff;
@@ -141,7 +141,7 @@ export function CartContent({ cartData, session }) {
           </div>
         </Card>
 
-        {cartData.map((item, idx, arr) => (
+        {cartData?.map((item, idx, arr) => (
           <Card
             key={item.cartItemId}
             className={`rounded-lg shadow-sm ${
