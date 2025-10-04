@@ -43,7 +43,7 @@ export default function LoginForm() {
               label="Email / Nomor HP"
               type="text"
               placeholder="Masukkan email atau No. HP"
-              defaultValue={state.inputs?.identifier ?? "085156927910"}
+              defaultValue={state.inputs?.identifier}
               required
               error={state?.errors?.identifier?.[0]}
             />
@@ -55,7 +55,7 @@ export default function LoginForm() {
               label="Password"
               type={showPassword ? "text" : "password"}
               placeholder="Masukkan password"
-              defaultValue={state.inputs?.password ?? "12345678"}
+              defaultValue={state.inputs?.password}
               required
               minLength={7}
               autoComplete="current-password"
