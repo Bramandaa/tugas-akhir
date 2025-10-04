@@ -1,6 +1,11 @@
-import prisma from "@/lib/prisma";
+"use server";
 
-export async function updateStatusOrderDashboard(id, status) {
+import prisma from "@/lib/prisma";
+import { verifySession } from "@/lib/session";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+
+export async function updateStatusOrderDashboard(invoiceNumber, status) {
   const session = await verifySession();
 
   if (session.role !== "ADMIN" && session.role !== "SUPER_ADMIN") {
@@ -9,7 +14,7 @@ export async function updateStatusOrderDashboard(id, status) {
 
   try {
     await prisma.order.update({
-      where: { id: Number(id) },
+      where: { invoiceNumber: invoiceNumber },
       data: { status },
     });
   } catch (error) {

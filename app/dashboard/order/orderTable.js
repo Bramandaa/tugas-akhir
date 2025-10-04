@@ -31,9 +31,9 @@ export function OrderTable({ orders, page, limit, totalPages }) {
     return params.toString();
   };
 
-  const handleChangeStatus = async (id, newStatus) => {
+  const handleChangeStatus = async (invoiceNumber, newStatus) => {
     if (!confirm(`Yakin ubah status pesanan ini menjadi ${newStatus}?`)) return;
-    await updateStatusOrderDashboard(id, newStatus);
+    await updateStatusOrderDashboard(invoiceNumber, newStatus);
   };
 
   const statusOptions = [
@@ -71,7 +71,7 @@ export function OrderTable({ orders, page, limit, totalPages }) {
         {statusOptions.map((status) => (
           <DropdownMenuItem
             key={status.value}
-            onClick={() => handleChangeStatus(item.id, status.value)}
+            onClick={() => handleChangeStatus(item.invoiceNumber, status.value)}
           >
             {status.label}
           </DropdownMenuItem>
